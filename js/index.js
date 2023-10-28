@@ -1,5 +1,10 @@
 let respuesta = 0;
-let objetivo, genero, peso, altura, edad;
+let persona = {
+    genero: 0,
+    peso: 0,
+    altura: 0,
+    edad: 0,
+}
 
 const superavit = (gastoTotal) => {
     let kcalObjetivo = parseInt(gastoTotal + 400);
@@ -25,13 +30,15 @@ const normoCalorico = (gastoTotal) => {
         `);
 }
 
-//Formulas Tasa Metabolica Basal (TMB)
-const tmbHombre = () => {
-    return (10 * peso) + (6.25 * altura) - (5 * edad) + 5;
-}
-
-const tmbMujer = () => {
-    return (10 * peso) + (6.25 * altura) - (5 * edad) - 161;
+//Formula de Tasa Metabolica Basal (TMB)
+const tasaMetabolicaBasal = () => {
+    let tmb = (10 * persona.peso) + (6.25 * persona.altura) - (5 * persona.edad);
+    if (persona.genero == 1) { // tmbMujer
+        tmb -= 161;
+    } else if (persona.genero == 2) { // tmbHombre
+        tmb += 5;
+    }
+    return tmb;
 }
 
 const gastoEnergeticoTotal = (tmb, actividad) => {
@@ -42,7 +49,7 @@ const gastoEnergeticoTotal = (tmb, actividad) => {
 const respuestaIncorrecta = () => alert("Respuesta incorrecta");
 
 while (respuesta != 4) {
-    let tmb, actividad;
+    let tmb, actividad, objetivo;
 
     respuesta = parseInt(prompt(
         `Ingrese el número del objetivo buscado:\n
@@ -56,7 +63,7 @@ while (respuesta != 4) {
 
     if (respuesta == 4) {
         break;
-    } else if (respuesta < 1 || respuesta > 4) {
+    } else if (respuesta < 1 || respuesta > 4 || isNaN(respuesta)) {
         respuestaIncorrecta();
         continue;
     }
@@ -70,39 +77,35 @@ while (respuesta != 4) {
 
     if (respuesta == 4) {
         break;
-    } else if (respuesta < 1 || respuesta > 2) {
+    } else if (respuesta < 1 || respuesta > 2 || isNaN(respuesta)) {
         respuestaIncorrecta();
         continue;
     }
 
-    genero = respuesta;
+    persona.genero = respuesta;
 
     respuesta = parseInt(prompt(
         `Ingrese el peso en Kilogramos, ó 4. Para SALIR`
     ));
     
     if (respuesta == 4) break;
-    peso = respuesta;
+    persona.peso = respuesta;
 
     respuesta = parseInt(prompt(
         `Ingrese la altura en Centímetros, ó 4. Para SALIR`
     ));
 
     if (respuesta == 4) break;
-    altura = respuesta;
+    persona.altura = respuesta;
 
     respuesta = parseInt(prompt(
         `Ingrese la edad en años, ó 4. Para SALIR`
     ));
 
     if (respuesta == 4) break;
-    edad = respuesta;
+    persona.edad = respuesta;
 
-    if (genero == 1) {
-        tmb = tmbMujer();
-    } else if (genero == 2) {
-        tmb = tmbHombre();
-    }
+    tmb = tasaMetabolicaBasal();
 
     respuesta = parseInt(prompt(
         `Ingrese el factor de actividad física:\n
