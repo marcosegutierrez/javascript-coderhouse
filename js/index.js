@@ -1,33 +1,40 @@
+/*** Variables ***/
+
 let respuesta = 0;
 let persona = {
     genero: 0,
     peso: 0,
     altura: 0,
     edad: 0,
+};
+const factoresDieta = [
+    {tmb: 0},
+    {actividad: 0},
+    {termogenesis: 1.1}
+];
+
+/*** Funciones - Cálculos ***/
+
+const salidaFinal = (objetivoTxt, kcalObjetivo) => {
+    alert(
+        `Las kcal que debes consumir según tu objetivo de ${objetivoTxt} son:
+        ${kcalObjetivo}
+        `);
 }
 
 const superavit = (gastoTotal) => {
     let kcalObjetivo = parseInt(gastoTotal + 400);
-    alert(
-        `Las kcal que debes consumir según tu objetivo de Aumento de Masa Muscular son:
-        ${kcalObjetivo}
-        `);
+    salidaFinal("Aumento de Masa Muscular", kcalObjetivo);
 }
 
 const deficit = (gastoTotal) => {
     let kcalObjetivo = parseInt(gastoTotal - 400);
-    alert(
-        `Las kcal que debes consumir según tu objetivo de Pérdida de Grasa son:
-        ${kcalObjetivo}
-        `);
+    salidaFinal("Pérdida de Grasa", kcalObjetivo);
 }
 
 const normoCalorico = (gastoTotal) => {
     let kcalObjetivo = parseInt(gastoTotal);
-    alert(
-        `Las kcal que debes consumir según tu objetivo de Manter el Peso son:
-        ${kcalObjetivo}
-        `);
+    salidaFinal("Manter el Peso", kcalObjetivo);
 }
 
 //Formula de Tasa Metabolica Basal (TMB)
@@ -41,15 +48,16 @@ const tasaMetabolicaBasal = () => {
     return tmb;
 }
 
-const gastoEnergeticoTotal = (tmb, actividad) => {
-    const gastoTotal = tmb * actividad * 1.1;
-    return gastoTotal;
+const gastoEnergeticoTotal = () => {
+    return factoresDieta.reduce((acc, val) => acc * Object.values(val)[0], 1);
 }
 
 const respuestaIncorrecta = () => alert("Respuesta incorrecta");
 
+/*** Interacción con el usuario ***/
+
 while (respuesta != 4) {
-    let tmb, actividad, objetivo;
+    let objetivo;
 
     respuesta = parseInt(prompt(
         `Ingrese el número del objetivo buscado:\n
@@ -88,24 +96,42 @@ while (respuesta != 4) {
         `Ingrese el peso en Kilogramos, ó 4. Para SALIR`
     ));
     
-    if (respuesta == 4) break;
+    if (respuesta == 4) {
+        break;
+    } else if (respuesta < 1 || isNaN(respuesta)) {
+        respuestaIncorrecta();
+        continue;
+    }
+
     persona.peso = respuesta;
 
     respuesta = parseInt(prompt(
         `Ingrese la altura en Centímetros, ó 4. Para SALIR`
     ));
 
-    if (respuesta == 4) break;
+    if (respuesta == 4) {
+        break;
+    } else if (respuesta < 1 || isNaN(respuesta)) {
+        respuestaIncorrecta();
+        continue;
+    }
+    
     persona.altura = respuesta;
 
     respuesta = parseInt(prompt(
         `Ingrese la edad en años, ó 4. Para SALIR`
     ));
 
-    if (respuesta == 4) break;
+    if (respuesta == 4) {
+        break;
+    } else if (respuesta < 1 || isNaN(respuesta)) {
+        respuestaIncorrecta();
+        continue;
+    }
+
     persona.edad = respuesta;
 
-    tmb = tasaMetabolicaBasal();
+    factoresDieta[0].tmb = tasaMetabolicaBasal();
 
     respuesta = parseInt(prompt(
         `Ingrese el factor de actividad física:\n
@@ -120,25 +146,23 @@ while (respuesta != 4) {
 
     switch (respuesta) {
         case 0:
-            actividad = 1.3;
+            factoresDieta[1].actividad = 1.3;
             break;
         case 1:
-            actividad = 1.5;
+            factoresDieta[1].actividad = 1.5;
             break;
         case 2:
-            actividad = 1.7;
+            factoresDieta[1].actividad = 1.7;
             break;
         case 3:
-            actividad = 1.9;
+            factoresDieta[1].actividad = 1.9;
             break;
         default:
             respuestaIncorrecta();
             continue;
     }
 
-    if (respuesta == 4) break;
-
-    let gastoTotal = gastoEnergeticoTotal(tmb, actividad);
+    let gastoTotal = gastoEnergeticoTotal();
 
     switch (objetivo) {
         case 1:
