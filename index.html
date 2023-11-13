@@ -4,11 +4,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Proyecto Javascript</title>
+    <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
     <h1>Proyecto Javascript - Coderhouse</h1>
     <h2>Crea tu dieta desde 0</h2>
     <p>En base al objetivo buscado y los datos brindados se plantea las calorias que se deben consumir.</p>
+    <form action="">
+        <label for="objetivo">Ingrese el objetivo buscado:</label>
+        <select id="objetivo" name="objetivo">
+            <option value="aumento">Aumento de Masa Muscular</option>
+            <option value="perdida">Pérdida de Grasa</option>
+            <option value="mantenimiento">Mantener mi Peso</option>
+        </select>
+        <br>
+        <label for="genero">Ingrese el género:</label>
+        <select id="genero" name="genero">
+            <option value="femenino">Femenino</option>
+            <option value="masculino">Masculino</option>
+        </select>
+        <br>
+        <label for="peso">Ingrese el peso en Kilogramos:</label>
+        <input type="text" name="peso" id="peso"> kg.
+        <br>
+        <label for="altura">Ingrese la altura en Centímetros:</label>
+        <input type="text" name="altura" id="altura"> cm.
+        <br>
+        <label for="edad">Ingrese la edad en años:</label>
+        <input type="text" name="edad" id="edad"> años.
+        <br>
+        <label for="actividad">Ingrese el factor de actividad física:</label>
+        <select id="actividad" name="actividad">
+            <option value="sedentario">Sedentario</option>
+            <option value="ligeramenteActivo">Ligeramente activo</option>
+            <option value="activo">Activo</option>
+            <option value="muyActivo">Muy activo</option>
+        </select>
+        <br><br>
+        <div id="botones">
+            <button id="btnCalcular">Calcular</button>
+            <button id="btnResetear">Resetear formulario</button>
+        </div>
+        <br>
+        <div id="resultado"></div>
+    </form>
 
     <script src="./js/index.js"></script>
 </body>

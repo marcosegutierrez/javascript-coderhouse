@@ -1,6 +1,6 @@
 /*** Variables ***/
 
-let respuesta = 0;
+let respuesta = 4;
 let persona = {
     genero: 0,
     peso: 0,
@@ -13,7 +13,25 @@ const factoresDieta = [
     {termogenesis: 1.1}
 ];
 
+/* Variables capturadoras del DOM */
+
+let objetivo = document.getElementById('objetivo');
+let genero = document.getElementById('genero');
+let peso = document.getElementById('peso');
+let altura = document.getElementById('altura');
+let edad = document.getElementById('edad');
+let actividad = document.getElementById('actividad');
+let btnCalcular = document.getElementById('btnCalcular');
+let btnResetear = document.getElementById('btnResetear');
+
 /*** Funciones - Cálculos ***/
+
+const setearDatos = () => {
+    persona.genero = genero.value;
+    persona.peso = peso.value;
+    persona.altura = altura.value;
+    persona.edad = edad.value;
+}
 
 const salidaFinal = (objetivoTxt, kcalObjetivo) => {
     alert(
@@ -21,6 +39,8 @@ const salidaFinal = (objetivoTxt, kcalObjetivo) => {
         ${kcalObjetivo}
         `);
 }
+
+/* Funciones según objetivo buscado */
 
 const superavit = (gastoTotal) => {
     let kcalObjetivo = parseInt(gastoTotal + 400);
@@ -40,9 +60,9 @@ const normoCalorico = (gastoTotal) => {
 //Formula de Tasa Metabolica Basal (TMB)
 const tasaMetabolicaBasal = () => {
     let tmb = (10 * persona.peso) + (6.25 * persona.altura) - (5 * persona.edad);
-    if (persona.genero == 1) { // tmbMujer
+    if (persona.genero == "femenino") { // tmbMujer
         tmb -= 161;
-    } else if (persona.genero == 2) { // tmbHombre
+    } else if (persona.genero == "masculino") { // tmbHombre
         tmb += 5;
     }
     return tmb;
@@ -52,130 +72,47 @@ const gastoEnergeticoTotal = () => {
     return factoresDieta.reduce((acc, val) => acc * Object.values(val)[0], 1);
 }
 
-const respuestaIncorrecta = () => alert("Respuesta incorrecta");
-
-/*** Interacción con el usuario ***/
-
-while (respuesta != 4) {
-    let objetivo;
-
-    respuesta = parseInt(prompt(
-        `Ingrese el número del objetivo buscado:\n
-        1. Aumento de Masa Muscular.\n
-        2. Pérdida de Grasa.\n
-        3. Mantener mi peso.\n
-        4. Para SALIR`
-        ));
-    
-    objetivo = respuesta;
-
-    if (respuesta == 4) {
-        break;
-    } else if (respuesta < 1 || respuesta > 4 || isNaN(respuesta)) {
-        respuestaIncorrecta();
-        continue;
-    }
-
-    respuesta = parseInt(prompt(
-        `Ingrese el género:\n
-        1. Femenino.\n
-        2. Masculino.\n
-        4. Para SALIR`
-    ));
-
-    if (respuesta == 4) {
-        break;
-    } else if (respuesta < 1 || respuesta > 2 || isNaN(respuesta)) {
-        respuestaIncorrecta();
-        continue;
-    }
-
-    persona.genero = respuesta;
-
-    respuesta = parseInt(prompt(
-        `Ingrese el peso en Kilogramos, ó 4. Para SALIR`
-    ));
-    
-    if (respuesta == 4) {
-        break;
-    } else if (respuesta < 1 || isNaN(respuesta)) {
-        respuestaIncorrecta();
-        continue;
-    }
-
-    persona.peso = respuesta;
-
-    respuesta = parseInt(prompt(
-        `Ingrese la altura en Centímetros, ó 4. Para SALIR`
-    ));
-
-    if (respuesta == 4) {
-        break;
-    } else if (respuesta < 1 || isNaN(respuesta)) {
-        respuestaIncorrecta();
-        continue;
-    }
-    
-    persona.altura = respuesta;
-
-    respuesta = parseInt(prompt(
-        `Ingrese la edad en años, ó 4. Para SALIR`
-    ));
-
-    if (respuesta == 4) {
-        break;
-    } else if (respuesta < 1 || isNaN(respuesta)) {
-        respuestaIncorrecta();
-        continue;
-    }
-
-    persona.edad = respuesta;
-
-    factoresDieta[0].tmb = tasaMetabolicaBasal();
-
-    respuesta = parseInt(prompt(
-        `Ingrese el factor de actividad física:\n
-        0. Sedentario.\n
-        1. Ligeramente activo.\n
-        2. Activo.\n
-        3. Muy activo.\n
-        4. Para SALIR`
-    ));
-
-    if (respuesta == 4) break;
-
+const actividadFisica = (respuesta) => {
     switch (respuesta) {
-        case 0:
+        case "sedentario":
             factoresDieta[1].actividad = 1.3;
             break;
-        case 1:
+        case "ligeramenteActivo":
             factoresDieta[1].actividad = 1.5;
             break;
-        case 2:
+        case "activo":
             factoresDieta[1].actividad = 1.7;
             break;
-        case 3:
+        case "muyActivo":
             factoresDieta[1].actividad = 1.9;
             break;
-        default:
-            respuestaIncorrecta();
-            continue;
     }
+}
 
+const calcularObjetivo = (objetivo) => {
     let gastoTotal = gastoEnergeticoTotal();
-
     switch (objetivo) {
-        case 1:
+        case "aumento":
             superavit(gastoTotal);
             break;
-        case 2:
+        case "perdida":
             deficit(gastoTotal);
             break;
-        case 3:
+        case "mantenimiento":
             normoCalorico(gastoTotal);
             break;
-        default:
-            break;
     }
-
 }
+
+const respuestaIncorrecta = () => alert("Respuesta incorrecta");
+
+const calcular = (e) => {
+    e.preventDefault();
+    // Seteo de datos (values)
+    setearDatos();
+    factoresDieta[0].tmb = tasaMetabolicaBasal();
+    actividadFisica(actividad.value);
+    calcularObjetivo(objetivo.value);    
+}
+
+btnCalcular.addEventListener('click', calcular);
