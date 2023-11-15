@@ -8,4 +8,6 @@ body {
     font-size: large;
   }
 
-  
+.salida {
+  color: red;
+}

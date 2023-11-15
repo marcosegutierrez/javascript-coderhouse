@@ -34,10 +34,10 @@ const setearDatos = () => {
 }
 
 const salidaFinal = (objetivoTxt, kcalObjetivo) => {
-    alert(
-        `Las kcal que debes consumir según tu objetivo de ${objetivoTxt} son:
-        ${kcalObjetivo}
-        `);
+    let resultado = document.getElementById('resultado');
+    resultado.classList.add('salida');
+    resultado.innerHTML = `<p>Las kcal que debes consumir según tu objetivo de
+                        ${objetivoTxt} son: <b>${kcalObjetivo}</b></p>`;
 }
 
 /* Funciones según objetivo buscado */
@@ -104,15 +104,24 @@ const calcularObjetivo = (objetivo) => {
     }
 }
 
-const respuestaIncorrecta = () => alert("Respuesta incorrecta");
+const validarDatos = () => {
+    let res = true;
+    if (persona.peso <= 0 || persona.altura <= 0 || persona.edad <= 0) {
+        alert("Los datos numéricos deben ser mayores a 0");
+        res = false;
+    }
+    return res;
+}
 
 const calcular = (e) => {
     e.preventDefault();
     // Seteo de datos (values)
     setearDatos();
-    factoresDieta[0].tmb = tasaMetabolicaBasal();
-    actividadFisica(actividad.value);
-    calcularObjetivo(objetivo.value);    
+    if (validarDatos()) {
+        factoresDieta[0].tmb = tasaMetabolicaBasal();
+        actividadFisica(actividad.value);
+        calcularObjetivo(objetivo.value);    
+    }
 }
 
 btnCalcular.addEventListener('click', calcular);
