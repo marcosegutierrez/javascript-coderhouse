@@ -1,6 +1,6 @@
 /*** Variables ***/
 
-let respuesta = 4;
+let personaStorage = JSON.parse(localStorage.getItem('persona'));
 let persona = {
     genero: 0,
     peso: 0,
@@ -24,13 +24,33 @@ let actividad = document.getElementById('actividad');
 let btnCalcular = document.getElementById('btnCalcular');
 let btnResetear = document.getElementById('btnResetear');
 
+objetivo.value = personaStorage?.objetivo || objetivo.value;
+genero.value = personaStorage?.genero || genero.value;
+peso.value = personaStorage?.peso || peso.value;
+altura.value = personaStorage?.altura || altura.value;
+edad.value = personaStorage?.edad || edad.value;
+actividad.value = personaStorage?.actividad || actividad.value;
+
 /*** Funciones - Cálculos ***/
+
+const guardarStorage = () => {
+    const obj = {
+        objetivo : objetivo.value,
+        genero: persona.genero,
+        peso: persona.peso,
+        altura: persona.altura,
+        edad: persona.edad,
+        actividad: actividad.value,
+    }
+    localStorage.setItem("persona", JSON.stringify(obj));
+}
 
 const setearDatos = () => {
     persona.genero = genero.value;
     persona.peso = peso.value;
     persona.altura = altura.value;
     persona.edad = edad.value;
+    guardarStorage();
 }
 
 const salidaFinal = (objetivoTxt, kcalObjetivo) => {
@@ -124,4 +144,9 @@ const calcular = (e) => {
     }
 }
 
+const resetear = () => {
+    localStorage.clear();
+}
+
 btnCalcular.addEventListener('click', calcular);
+btnResetear.addEventListener('click', resetear);
