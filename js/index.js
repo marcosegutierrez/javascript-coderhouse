@@ -1,3 +1,7 @@
+/*** Imports ***/
+
+import comidas from "./comidas.js";
+
 /*** Variables ***/
 
 let personaStorage = JSON.parse(localStorage.getItem('persona'));
@@ -61,6 +65,7 @@ const salidaFinal = (objetivoTxt, kcalObjetivo) => {
     resultado.classList.add('salida');
     resultado.innerHTML = `<p>Las kcal que debes consumir según tu objetivo de
                         ${objetivoTxt} son: <b>${kcalObjetivo}</b></p>`;
+    comidas.obtenerComidas();
 }
 
 /* Funciones según objetivo buscado */
@@ -144,7 +149,12 @@ const calcularObjetivo = (objetivo) => {
 const validarDatos = () => {
     let res = true;
     if (persona.peso <= 0 || persona.altura <= 0 || persona.edad <= 0) {
-        alert("Los datos numéricos deben ser mayores a 0");
+        Swal.fire({
+            title: 'Error!',
+            text: 'Los datos numéricos deben ser mayores a 0',
+            icon: 'error',
+            confirmButtonText: 'OK'
+        })
         res = false;
     }
     return res;
@@ -157,7 +167,7 @@ const calcular = (e) => {
     if (validarDatos()) {
         factoresDieta[0].tmb = tasaMetabolicaBasal();
         actividadFisica(estiloDeVida.value, entrenamiento.value);
-        calcularObjetivo(objetivo.value);    
+        calcularObjetivo(objetivo.value);
     }
 }
 

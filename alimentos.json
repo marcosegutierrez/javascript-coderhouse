@@ -1,0 +1,76 @@
+{
+    "alimentos": [
+        {
+            "id": 1,
+            "alimento": "Carne Bovina",
+            "porcion": "200 gr",
+            "calorias": 286,
+            "carbohidratos": 0,
+            "grasas": 7,
+            "proteinas": 46
+        },
+        {
+            "id": 2,
+            "alimento": "Pollo",
+            "porcion": "200 gr",
+            "calorias": 200,
+            "carbohidratos": 0,
+            "grasas": 1.6,
+            "proteinas": 46.6
+        },
+        {
+            "id": 3,
+            "alimento": "Arroz",
+            "porcion": "50 gr",
+            "calorias": 180,
+            "carbohidratos": 43,
+            "grasas": 0,
+            "proteinas": 3
+        },
+        {
+            "id": 4,
+            "alimento": "Papa",
+            "porcion": "100 gr",
+            "calorias": 76,
+            "carbohidratos": 18,
+            "grasas": 0,
+            "proteinas": 1
+        },
+        {
+            "id": 5,
+            "alimento": "Lechuga",
+            "porcion": "100 gr",
+            "calorias": 14,
+            "carbohidratos": 2.9,
+            "grasas": 0.1,
+            "proteinas": 1.1
+        },
+        {
+            "id": 6,
+            "alimento": "Tomate",
+            "porcion": "123 gr",
+            "calorias": 22,
+            "carbohidratos": 4.8,
+            "grasas": 0.2,
+            "proteinas": 1.1
+        },
+        {
+            "id": 7,
+            "alimento": "Aceite de Oliva",
+            "porcion": "1 cucharada",
+            "calorias": 135,
+            "carbohidratos": 0,
+            "grasas": 15,
+            "proteinas": 0
+        },
+        {
+            "id": 8,
+            "alimento": "Almendras",
+            "porcion": "10 unidades",
+            "calorias": 70,
+            "carbohidratos": 2.3,
+            "grasas": 6,
+            "proteinas": 2.5
+        }
+    ]
+}
