@@ -71,6 +71,24 @@
             "carbohidratos": 2.3,
             "grasas": 6,
             "proteinas": 2.5
+        },
+        {
+            "id": 9,
+            "alimento": "Pan Lactal Blanco",
+            "porcion": "2 rodajas",
+            "calorias": 149,
+            "carbohidratos": 29,
+            "grasas": 1,
+            "proteinas": 6
+        },
+        {
+            "id": 10,
+            "alimento": "Pan Lactal Integral",
+            "porcion": "2 rodajas",
+            "calorias": 112,
+            "carbohidratos": 19,
+            "grasas": 1.6,
+            "proteinas": 5.5
         }
     ]
 }

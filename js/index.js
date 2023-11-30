@@ -1,6 +1,6 @@
 /*** Imports ***/
 
-import comidas from "./comidas.js";
+import { calcularObjetivo } from "./objetivos.js";
 
 /*** Variables ***/
 
@@ -60,31 +60,6 @@ const setearDatos = () => {
     guardarStorage();
 }
 
-const salidaFinal = (objetivoTxt, kcalObjetivo) => {
-    let resultado = document.getElementById('resultado');
-    resultado.classList.add('salida');
-    resultado.innerHTML = `<p>Las kcal que debes consumir según tu objetivo de
-                        ${objetivoTxt} son: <b>${kcalObjetivo}</b></p>`;
-    comidas.obtenerComidas();
-}
-
-/* Funciones según objetivo buscado */
-
-const superavit = (gastoTotal) => {
-    let kcalObjetivo = parseInt(gastoTotal + 400);
-    salidaFinal("Aumento de Masa Muscular", kcalObjetivo);
-}
-
-const deficit = (gastoTotal) => {
-    let kcalObjetivo = parseInt(gastoTotal - 400);
-    salidaFinal("Pérdida de Grasa", kcalObjetivo);
-}
-
-const normoCalorico = (gastoTotal) => {
-    let kcalObjetivo = parseInt(gastoTotal);
-    salidaFinal("Manter el Peso", kcalObjetivo);
-}
-
 //Formula de Tasa Metabolica Basal (TMB)
 const tasaMetabolicaBasal = () => {
     let tmb = (10 * persona.peso) + (6.25 * persona.altura) - (5 * persona.edad);
@@ -131,21 +106,6 @@ const actividadFisica = (estiloDeVida, entrenamiento) => {
     }
 }
 
-const calcularObjetivo = (objetivo) => {
-    let gastoTotal = gastoEnergeticoTotal();
-    switch (objetivo) {
-        case "aumento":
-            superavit(gastoTotal);
-            break;
-        case "perdida":
-            deficit(gastoTotal);
-            break;
-        case "mantenimiento":
-            normoCalorico(gastoTotal);
-            break;
-    }
-}
-
 const validarDatos = () => {
     let res = true;
     if (persona.peso <= 0 || persona.altura <= 0 || persona.edad <= 0) {
@@ -167,7 +127,7 @@ const calcular = (e) => {
     if (validarDatos()) {
         factoresDieta[0].tmb = tasaMetabolicaBasal();
         actividadFisica(estiloDeVida.value, entrenamiento.value);
-        calcularObjetivo(objetivo.value);
+        calcularObjetivo(objetivo.value, gastoEnergeticoTotal);
     }
 }
 

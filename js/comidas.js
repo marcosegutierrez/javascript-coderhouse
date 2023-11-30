@@ -7,7 +7,10 @@ const obtenerAlimentos = async () => {
 const obtenerComidas = async () => {
     const alimentos = await obtenerAlimentos();
     console.log(alimentos);
+    let element = document.getElementById('idAlimentos');
+    element && element.remove();
     let textAlimentos = document.createElement('div');
+    textAlimentos.setAttribute("id", "idAlimentos");
     textAlimentos.innerHTML = ` <p>Una comida de 500 kcal se ve así:</p>
                                 <ul>
                                     <li> Alimento: ${alimentos[0].alimento} </li>
