@@ -4,36 +4,36 @@ const obtenerAlimentos = async () => {
     return valores.alimentos
 }
 
-const obtenerComidas = async () => {
-    const alimentos = await obtenerAlimentos();
-    console.log(alimentos);
+const listadoComidas = (alimentos, kcal, ...indices) => {
+    let txt = `<div class="col"> <p>Una comida de <b>${kcal} kcal</b> se ve así:</p>`
+    for (let i of indices) {
+        txt += `
+        <ul>
+            <li> Alimento: ${alimentos[i].alimento} </li>
+            <li> Porción: ${alimentos[i].porcion} </li>
+            <li> Calorías: ${alimentos[i].calorias} </li>
+        </ul>
+        `
+    }
+    txt += `</div>`
+    return txt
+}
+
+const vistaComidas = (...listado) => {
     let element = document.getElementById('idAlimentos');
     element && element.remove();
     let textAlimentos = document.createElement('div');
     textAlimentos.setAttribute("id", "idAlimentos");
-    textAlimentos.innerHTML = ` <p>Una comida de 500 kcal se ve así:</p>
-                                <ul>
-                                    <li> Alimento: ${alimentos[0].alimento} </li>
-                                    <li> Porción: ${alimentos[0].porcion} </li>
-                                    <li> Calorías: ${alimentos[0].calorias} </li>
-                                </ul>
-                                <ul>
-                                    <li> Alimento: ${alimentos[3].alimento} </li>
-                                    <li> Porción: ${alimentos[3].porcion} </li>
-                                    <li> Calorías: ${alimentos[3].calorias} </li>
-                                </ul>
-                                <ul>
-                                    <li> Alimento: ${alimentos[5].alimento} </li>
-                                    <li> Porción: ${alimentos[5].porcion} </li>
-                                    <li> Calorías: ${alimentos[5].calorias} </li>
-                                </ul>
-                                <ul>
-                                    <li> Alimento: ${alimentos[6].alimento} </li>
-                                    <li> Porción: ${alimentos[6].porcion} </li>
-                                    <li> Calorías: ${alimentos[6].calorias} </li>
-                                </ul>
-                            `;
+    textAlimentos.setAttribute("class", "row align-items-start");
+    for (let i of listado) textAlimentos.innerHTML += i;
     document.body.append(textAlimentos);
+}
+
+const obtenerComidas = async () => {
+    const alimentos = await obtenerAlimentos();
+    let listado1 = listadoComidas(alimentos, 500, 0, 2, 4, 6);
+    let listado2 = listadoComidas(alimentos, 250, 9, 10, 12);
+    vistaComidas(listado1, listado2)
 }
 
 const comidas = {

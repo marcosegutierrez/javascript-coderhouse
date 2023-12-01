@@ -57,7 +57,6 @@ const setearDatos = () => {
     persona.peso = peso.value;
     persona.altura = altura.value;
     persona.edad = edad.value;
-    guardarStorage();
 }
 
 //Formula de Tasa Metabolica Basal (TMB)
@@ -128,6 +127,7 @@ const calcular = (e) => {
         factoresDieta[0].tmb = tasaMetabolicaBasal();
         actividadFisica(estiloDeVida.value, entrenamiento.value);
         calcularObjetivo(objetivo.value, gastoEnergeticoTotal);
+        guardarStorage();
     }
 }
 
