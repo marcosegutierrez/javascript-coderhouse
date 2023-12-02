@@ -14,29 +14,29 @@
     <p>En base al objetivo buscado y los datos brindados se plantea las calorias que se deben consumir.</p>
     <form action="">
         <label for="objetivo">Ingrese el objetivo buscado:</label>
-        <select id="objetivo" name="objetivo">
+        <select id="objetivo" name="objetivo" class="mb-2">
             <option value="aumento">Aumento de Masa Muscular</option>
             <option value="perdida">Pérdida de Grasa</option>
             <option value="mantenimiento">Mantener mi Peso</option>
         </select>
         <br>
         <label for="genero">Ingrese el género:</label>
-        <select id="genero" name="genero">
+        <select id="genero" name="genero" class="mb-2">
             <option value="femenino">Femenino</option>
             <option value="masculino">Masculino</option>
         </select>
         <br>
         <label for="peso">Ingrese el peso en Kilogramos:</label>
-        <input type="number" name="peso" id="peso"> kg.
+        <input type="number" name="peso" id="peso" class="mb-2"> kg.
         <br>
         <label for="altura">Ingrese la altura en Centímetros:</label>
-        <input type="number" name="altura" id="altura"> cm.
+        <input type="number" name="altura" id="altura" class="mb-2"> cm.
         <br>
         <label for="edad">Ingrese la edad en años:</label>
-        <input type="number" name="edad" id="edad"> años.
+        <input type="number" name="edad" id="edad" class="mb-2"> años.
         <br>
         <label for="estiloDeVida">Ingrese el estilo de vida habitual:</label>
-        <select id="estiloDeVida" name="estiloDeVida">
+        <select id="estiloDeVida" name="estiloDeVida" class="mb-2">
             <option value="sedentario">Sedentario</option>
             <option value="ligeramenteActivo">Ligeramente activo</option>
             <option value="activo">Activo</option>
@@ -44,14 +44,14 @@
         </select>
         <br>
         <label for="entrenamiento">Ingrese la frecuencia de entrenamiento:</label>
-        <select id="entrenamiento" name="entrenamiento">
+        <select id="entrenamiento" name="entrenamiento" class="mb-2">
             <option value="3">3 días</option>
             <option value="4">4 días</option>
             <option value="5">5 días</option>
             <option value="6">6 días</option>
         </select>
         <br><br>
-        <div id="botones">
+        <div id="botones" class="text-center">
             <button id="btnCalcular" class="btn btn-primary">Calcular</button>
             <button id="btnResetear" class="btn btn-danger">Resetear formulario</button>
         </div>
