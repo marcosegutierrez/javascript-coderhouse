@@ -1,6 +1,7 @@
 /*** Imports ***/
 
 import { calcularObjetivo } from "./objetivos.js";
+import calculosBase from "./calculosBase.js";
 
 /*** Variables ***/
 
@@ -29,6 +30,8 @@ let entrenamiento = document.getElementById('entrenamiento');
 let btnCalcular = document.getElementById('btnCalcular');
 let btnResetear = document.getElementById('btnResetear');
 
+/* Verificación del Local Storage y seteo de opciones */
+
 objetivo.value = personaStorage?.objetivo || objetivo.value;
 genero.value = personaStorage?.genero || genero.value;
 peso.value = personaStorage?.peso || peso.value;
@@ -52,57 +55,12 @@ const guardarStorage = () => {
     localStorage.setItem("persona", JSON.stringify(obj));
 }
 
+/* Seteo de datos en variables globales */
 const setearDatos = () => {
     persona.genero = genero.value;
     persona.peso = peso.value;
     persona.altura = altura.value;
     persona.edad = edad.value;
-}
-
-//Formula de Tasa Metabolica Basal (TMB)
-const tasaMetabolicaBasal = () => {
-    let tmb = (10 * persona.peso) + (6.25 * persona.altura) - (5 * persona.edad);
-    if (persona.genero == "femenino") { // tmbMujer
-        tmb -= 161;
-    } else if (persona.genero == "masculino") { // tmbHombre
-        tmb += 5;
-    }
-    return tmb;
-}
-
-const gastoEnergeticoTotal = () => {
-    return factoresDieta.reduce((acc, val) => acc * Object.values(val)[0], 1);
-}
-
-const actividadFisica = (estiloDeVida, entrenamiento) => {
-    switch (estiloDeVida) {
-        case "sedentario":
-            factoresDieta[1].actividad = 1.3;
-            break;
-        case "ligeramenteActivo":
-            factoresDieta[1].actividad = 1.5;
-            break;
-        case "activo":
-            factoresDieta[1].actividad = 1.7;
-            break;
-        case "muyActivo":
-            factoresDieta[1].actividad = 1.9;
-            break;
-    }
-    switch (entrenamiento) {
-        case "3":
-            factoresDieta[1].actividad += 0;
-            break;
-        case "4":
-            factoresDieta[1].actividad += 0.1;
-            break;
-        case "5":
-            factoresDieta[1].actividad += 0.2;
-            break;
-        case "6":
-            factoresDieta[1].actividad += 0.3;
-            break;
-    }
 }
 
 const validarDatos = () => {
@@ -124,9 +82,9 @@ const calcular = (e) => {
     // Seteo de datos (values)
     setearDatos();
     if (validarDatos()) {
-        factoresDieta[0].tmb = tasaMetabolicaBasal();
-        actividadFisica(estiloDeVida.value, entrenamiento.value);
-        calcularObjetivo(objetivo.value, gastoEnergeticoTotal);
+        factoresDieta[0].tmb = calculosBase.tasaMetabolicaBasal(persona);
+        factoresDieta[1].actividad = calculosBase.actividadFisica(estiloDeVida.value, entrenamiento.value);
+        calcularObjetivo(objetivo.value, calculosBase.gastoEnergeticoTotal, factoresDieta);
         guardarStorage();
     }
 }

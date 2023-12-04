@@ -4,6 +4,7 @@ const obtenerAlimentos = async () => {
     return valores.alimentos
 }
 
+/* Ejemplos de comidas */
 const listadoComidas = (alimentos, kcal, ...indices) => {
     let txt = `<div class="col"> <p>Una comida de <b>${kcal} kcal</b> se ve así:</p>`
     for (let i of indices) {
@@ -40,7 +41,6 @@ const obtenerComidas = async () => {
 }
 
 const comidas = {
-    obtenerAlimentos,
     obtenerComidas
 };
 

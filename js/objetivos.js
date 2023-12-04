@@ -25,8 +25,8 @@ const normoCalorico = (gastoTotal) => {
     salidaFinal("Manter el Peso", kcalObjetivo);
 }
 
-export const calcularObjetivo = (objetivo, gastoEnergeticoTotal) => {
-    let gastoTotal = gastoEnergeticoTotal();
+export const calcularObjetivo = (objetivo, gastoEnergeticoTotal, factoresDieta) => {
+    let gastoTotal = gastoEnergeticoTotal(factoresDieta);
     switch (objetivo) {
         case "aumento":
             superavit(gastoTotal);
